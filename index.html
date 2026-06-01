@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huy's Kindergarten Dashboard — 鵜ノ木幼稚園</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f0;color:#1a1a1a;font-size:14px;line-height:1.6}
+.top-bar{background:#1a1a1a;color:#fff;padding:12px 24px;display:flex;align-items:center;gap:12px}
+.top-bar h1{font-size:15px;font-weight:500;flex:1}
+.top-bar .sub{font-size:12px;color:#999}
+.last-updated{font-size:11px;color:#888;margin-left:auto}
+.container{max-width:900px;margin:0 auto;padding:24px 16px}
+.alert-bar{border-radius:10px;padding:12px 16px;margin-bottom:12px;display:flex;gap:10px;align-items:flex-start;border:1px solid transparent}
+.alert-red{background:#fff0f0;border-color:#fca5a5}
+.alert-amber{background:#fffbeb;border-color:#fcd34d}
+.alert-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.alert-text{font-size:13px;color:#1a1a1a;flex:1;line-height:1.5}
+.alert-text strong{font-weight:600;display:block;margin-bottom:2px}
+.tabs{display:flex;gap:2px;margin:20px 0 16px;border-bottom:1px solid #ddd;padding-bottom:0}
+.tab{padding:8px 18px;font-size:13px;cursor:pointer;border:none;background:none;color:#666;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;border-radius:6px 6px 0 0}
+.tab:hover{background:#eee;color:#333}
+.tab.active{color:#1a1a1a;border-bottom:2px solid #1a1a1a;font-weight:600;background:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.section-title{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin:20px 0 8px}
+.card{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:14px 18px;margin-bottom:10px}
+.event-row{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start}
+.event-row:last-child{border-bottom:none}
+.event-date{font-size:11px;font-weight:600;color:#888;min-width:60px;padding-top:2px;flex-shrink:0}
+.event-name{font-size:13px;color:#1a1a1a;flex:1}
+.event-tag{font-size:10px;padding:2px 7px;border-radius:5px;white-space:nowrap;font-weight:600;flex-shrink:0}
+.tag-event{background:#eff6ff;color:#1d4ed8}
+.tag-deadline{background:#fff0f0;color:#dc2626}
+.tag-uniform{background:#fffbeb;color:#b45309}
+.tag-health{background:#f0fdf4;color:#16a34a}
+.tag-noschool{background:#f5f5f5;color:#555}
+.checklist-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;user-select:none}
+.checklist-item:last-child{border-bottom:none}
+.checklist-item:hover{background:#fafafa;border-radius:6px;padding-left:4px}
+.check-box{width:18px;height:18px;border:1.5px solid #ccc;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all 0.15s}
+.check-box.done{background:#16a34a;border-color:#16a34a;color:#fff}
+.check-label{font-size:13px;color:#1a1a1a;flex:1}
+.check-label.done{text-decoration:line-through;color:#999}
+.check-meta{font-size:11px;color:#888;margin-top:2px}
+.uniform-block{border-radius:10px;padding:14px 16px;margin-bottom:10px;border:1px solid transparent}
+.ub-summer{background:#fffbeb;border-color:#fde68a}
+.ub-formal{background:#fff0f0;border-color:#fca5a5}
+.ub-pool{background:#f0fdf4;border-color:#86efac}
+.ub-daily{background:#f8fafc;border-color:#e2e8f0}
+.ub-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:8px}
+.ub-item{font-size:13px;display:flex;gap:8px;padding:3px 0;align-items:flex-start}
+.ub-item .ok{color:#16a34a;flex-shrink:0;font-weight:700}
+.ub-item .no{color:#dc2626;flex-shrink:0;font-weight:700}
+.ref-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:13px;align-items:center}
+.ref-row:last-child{border-bottom:none}
+.ref-key{color:#666}
+.ref-val{color:#1a1a1a;font-weight:600;text-align:right}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}.tabs{overflow-x:auto;flex-wrap:nowrap}.tab{white-space:nowrap}}
+.progress-bar{height:6px;background:#e5e5e5;border-radius:3px;margin:10px 0 4px;overflow:hidden}
+.progress-fill{height:100%;background:#16a34a;border-radius:3px;transition:width 0.3s}
+.progress-label{font-size:11px;color:#888;text-align:right}
+.flag-banner{background:#1a1a1a;color:#fff;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start}
+.flag-banner .icon{font-size:20px;flex-shrink:0}
+.flag-banner .text{font-size:13px;line-height:1.6}
+.flag-banner strong{color:#fbbf24}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div style="width:32px;height:32px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0">�U</div>
+  <div>
+    <h1>グエン・ミン・フィー — Kindergarten Dashboard</h1>
+    <div class="sub">こいぬ組 · きりんコース Bus #7b · 鵜ノ木幼稚園</div>
+  </div>
+  <div class="last-updated">Last updated: June 1, 2026</div>
+</div>
+
+<div class="container">
+
+  <div class="flag-banner">
+    <div class="icon">🚩</div>
+    <div class="text"><strong>Important flag:</strong> Huy joined こいぬ組 in June, not April like most classmates. Verify with teachers that he is registered in all school systems — pool survey, bus, lunch, extended care. All new June items (pool kit, summer uniform, bento box, ice pack) apply to him from day one.</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('alerts',this)">🚨 Alerts</button>
+    <button class="tab" onclick="showTab('calendar',this)">📅 Calendar</button>
+    <button class="tab" onclick="showTab('checklist',this)">✅ Checklist</button>
+    <button class="tab" onclick="showTab('uniform',this)">👔 Uniform</button>
+    <button class="tab" onclick="showTab('ref',this)">📋 Reference</button>
+  </div>
+
+  <div id="tab-alerts" class="tab-panel active">
+    <div class="alert-bar alert-red">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-text"><strong>TODAY — Summer uniform starts June 1</strong>Switch to summer uniform immediately. Swap spare socks in backpack from white knee-socks to white short socks. Every Wednesday is a formal dress day -- full uniform with apron required.</div>
+    </div>
+    <div class="alert-bar alert-red">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-text"><strong>DEADLINE June 15 at 5:00 PM -- July extra lunch sign-up</strong>Apply via renraku app for extra lunch (Wed/Thu/Fri) for July. Both Type 1 and Type 2 close June 15. Missing this means no extra lunch for July.</div>
+    </div>
+    <div class="alert-bar alert-red">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-text"><strong>CONFIRMED -- Parent-teacher conference July 10 (Fri) at 4:20 PM</strong>Location: Unoki Kindergarten (coinu class). Google Meet available if you cannot attend in person -- request in advance. Note: Type 1 extended care is suspended July 8-15.</div>
+    </div>
+    <div class="alert-bar alert-amber">
+      <div class="alert-icon">🟡</div>
+      <div class="alert-text"><strong>ACTION REQUIRED -- Pool participation survey on renraku app</strong>You must answer participate/don't participate before June 25. Pool opening ceremony June 24 (no swimming). First swim June 25. If participating: prepare swimsuit (self-undressing), bath towel, pool bag -- all labelled. Forgetting pool card = no swimming that day.</div>
+    </div>
+    <div class="alert-bar alert-amber">
+      <div class="alert-icon">🟡</div>
+      <div class="alert-text"><strong>DEADLINE June 29-July 2 -- Summer extended care booking (Type 2)</strong>Book via renraku app. Type 2: June 29 noon - July 2 noon. Type 1: July 6 noon - July 9 noon. Details distributed June 26 (Type 2) / July 3 (Type 1).</div>
+    </div>
+    <div class="alert-bar alert-amber">
+      <div class="alert-icon">🟡</div>
+      <div class="alert-text"><strong>From June -- Add bento box + ice pack to daily routine</strong>Start bringing a bento box (self-open type). Add a labelled ice pack to ALL homemade bentos from June due to heat. Thu/Fri are homemade bento days.</div>
+    </div>
+    <div class="alert-bar alert-amber">
+      <div class="alert-icon">🟡</div>
+      <div class="alert-text"><strong>From June -- 2 spare masks in bag back-pocket (labelled)</strong>School charges 13 yen per mask if they have to supply one. Keep 2 labelled spare masks in the bag's back pocket at all times.</div>
+    </div>
+  </div>
+
+  <div id="tab-calendar" class="tab-panel">
+    <div class="section-title">June 2026</div>
+    <div class="card">
+      <div class="event-row"><span class="event-date">Jun 1</span><span class="event-name"> Summer uniform starts -- swap socks in backpack too</span><span class="event-tag tag-uniform">uniform</span></div>
+      <div class="event-row"><span class="event-date">Jun 4 Thu</span><span class="event-name">Graduation album group photo -- full summer formal dress required (no polo)</span><span class="event-tag tag-event">event</span></div>
+      <div class="event-row"><span class="event-date">Jun 8 Mon</span><span class="event-name">Evacuation drill</span><span class="event-tag tag-event">event</span></div>
+      <div class="event-row"><span class="event-date">Jun 15 Mon</span><span class="event-name"> DEADLINE: July extra lunch sign-up closes at 5:00 PM</span><span class="event-tag tag-deadline">deadline</span></div>
+      <div class="event-row"><span class="event-date">Jun 21 Sun</span><span class="event-name">Father/Mother observation day -- coinu class time TBC</span><span class="event-tag tag-event">attend</span></div>
+      <div class="event-row"><span class="event-date">Jun 22 Mon</span><span class="event-name">School foundation day -- NO SCHOOL</span><span class="event-tag tag-noschool">no school</span></div>
+      <div class="event-row"><span class="event-date">Jun 24 Wed</span><span class="event-name">Pool opening ceremony -- rules talk only, no swimming yet</span><span class="event-tag tag-event">event</span></div>
+      <div class="event-row"><span class="event-date">Jun 25 Thu</span><span class="event-name">First pool day -- bring swimsuit + towel + pool card</span><span class="event-tag tag-health">pool</span></div>
+      <div class="event-row"><span class="event-date">Jun 29 Mon</span><span class="event-name"> Summer extended care booking opens (Type 2) -- closes Jul 2 noon</span><span class="event-tag tag-deadline">deadline</span></div>
+    </div>
+    <div class="section-title">July 2026</div>
+    <div class="card">
+      <div class="event-row"><span class="event-date">Jul 6-9</span><span class="event-name"> Summer extended care booking (Type 1) -- Jul 6 noon - Jul 9 noon</span><span class="event-tag tag-deadline">deadline</span></div>
+      <div class="event-row"><span class="event-date">Jul 8 Wed</span><span class="event-name">Parent-teacher conferences begin -- Type 1 care suspended</span><span class="event-tag tag-event">event</span></div>
+      <div class="event-row"><span class="event-date">Jul 10 Fri</span><span class="event-name"> HUY PARENT-TEACHERCONFERECE -- 4:20 PM (coinu class)</span><span class="event-tag tag-deadline">must attend</span></div>
+      <div class="event-row"><span class="event-date">Jul 15 Wed</span><span class="event-name"> DEADLINE: Aug extra lunch sign-up closes at 5:00 PM (Type 2)</span><span class="event-tag tag-deadline">deadline</span></div>
+      <div class="event-row"><span class="event-date">Jul 17 Fri</span><span class="event-name">Term 1 ends -- morning only</span><span class="event-tag tag-event">event</span></div>
+      <div class="event-row"><span class="event-date">Jul 21</span><span class="event-name">Summer break begins -- extended care available</span><span class="event-tag tag-noschool">summer</span></div>
+    </div>
+    <div class="section-title">August 2026</div>
+    <div class="card">
+      <div class="event-row"><span class="event-date">Aug 1-6</span><span class="event-name"> DEADLINE: Sep extra lunch sign-up (all types, closes Aug 6 at 11:30 AM)</span><span class="event-tag tag-deadline">deadline</span></div>
+      <div class="event-row"><span class="event-date">Aug 3-7</span><span class="event-name">Summer school week -- morning only, no bento, pool included</span><span class="event-tag tag-event">event</span></div>
+      <div class="event-row"><span class="event-date">Aug 3-7</span><span class="event-name"> Beach sandals required all week -- wear to/from school too</span><span class="event-tag tag-uniform">uniform</span></div>
+    </div>
+    <div class="section-title">October 2026</div>
+    <div class="card">
+      <div class="event-row"><span class="event-date">Oct 10 Sat</span><span class="event-name">Sports Day -- Higashi-Chofu 1st Elementary School grounds</span><span class="event-tag tag-event">attend</span></div>
+      <div class="event-row"><span class="event-date">Oct 11 Sun</span><span class="event-name">Sports Day raindate (or indoor if rain)</span><span class="event-tag tag-event">backup</span></div>
+    </div>
+  </div>
+
+  <div id="tab-checklist" class="tab-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="section-title" style="margin:0">June action items</div>
+      <div id="progress-label" style="font-size:12px;color:#888"></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="card" id="checklist-container"></div>
+    <button onclick="resetChecklist()" style="margin-top:10px;padding:6px 14px;font-size:12px;cursor:pointer;border:1px solid #ddd;border-radius:6px;background:#fff;color:#666">Reset all</button>
+  </div>
+
+  <div id="tab-uniform" class="tab-panel">
+    <div class="section-title">Current period: June 1 - September (summer uniform)</div>
+    <div class="uniform-block ub-summer">
+      <div class="ub-title">Regular days (Mon, Tue, Thu, Fri -- non-formal)</div>
+      <div class="ub-item"><span class="ok">OK</span> Summer cap -- ribbon worn at the back</div>
+      <div class="ub-item"><span class="ok">OK</span> Polo shirt OR open-collar shirt (boys) / blouse (girls)</div>
+      <div class="ub-item"><span class="ok">OK</span> Trousers or skirt (year-round type)</div>
+      <div class="ub-item"><span class="ok">OK</span> White short socks</div>
+      <div class="ub-item"><span class="no">NO</span> No apron on non-formal days</div>
+      <div class="ub-item"><span class="no">NO</span> No smock during summer</div>
+    </div>
+    <div class="uniform-block ub-formal">
+      <div class="ub-title">Formal days -- EVERY WEDNESDAY + school-specified events</div>
+      <div class="ub-item"><span class="ok">OK</span> Summer cap</div>
+      <div class="ub-item"><span class="ok">OK</span> Open-collar shirt (boys) / round-collar blouse (girls) -- NOT polo</div>
+      <div class="ub-item"><span class="ok">OK</span> Apron with school badge + name tag</div>
+      <div class="ub-item"><span class="ok">OK</span> Trousers or skirt</div>
+      <div class="ub-item"><span class="ok">OK</span> White short socks</div>
+    </div>
+    <div class="uniform-block ub-pool">
+      <div class="ub-title">Pool days (June 25 onwards)</div>
+      <div class="ub-item"><span class="ok">OK</span> Pool card -- must hand to teacher on arrival every pool day</div>
+      <div class="ub-item"><span class="ok">OK</span> Swimsuit -- self-undressing type</div>
+      <div class="ub-item"><span class="ok">OK</span> Bath towel -- remove snaps before packing</div>
+      <div class="ub-item"><span class="ok">OK</span> All items clearly labelled</div>
+      <div class="ub-item"><span class="ok">OK</span> Hair tied back -- no decorative clips</div>
+      <div class="ub-item"><span class="no">NO</span> No swimming if: skin warts, pink eye, or forgot pool card</div>
+    </div>
+    <div class="uniform-block ub-daily">
+      <div class="ub-title">Backpack contents from June</div>
+      <div class="ub-item"><span class="ok">OK</span> T-shirt + short pants</div>
+      <div class="ub-item"><span class="ok">OK</span> White short socks (replace knee-socks)</div>
+      <div class="ub-item"><span class="ok">OK</span> Spare underpants + dirty-clothes bag</div>
+      <div class="ub-item"><span class="ok">OK</span> Large plastic bag for wet T-shirt</div>
+    </div>
+    <div class="section-title">Every day -- non-negotiable</div>
+    <div class="card">
+      <div class="ub-item"><span class="ok">OK</span> Health check card -- filled in and clipped to bag</div>
+      <div class="ub-item"><span class="ok">OK</span> Handkerchief in trouser pocket</div>
+      <div class="ub-item"><span class="ok">OK</span> Tissue in trouser pocket</div>
+      <div class="ub-item"><span class="ok">OK</span> 2 spare masks in bag back-pocket (labelled)</div>
+      <div class="ub-item"><span class="ok">OK</span> Water bottle -- water or tea only</div>
+      <div class="ub-item"><span class="ok">OK</span> Lunch mat + milk cup pouch -- every day incl. Wednesday</div>
+      <div class="ub-item"><span class="ok">OK</span> Mon/Tue: no bento needed</div>
+      <div class="ub-item"><span class="ok">OK</span> Thu/Fri: homemade bento + ice pack (from June)</div>
+      <div class="ub-item"><span class="ok">OK</span> Bento box -- self-open type</div>
+      <div class="ub-item"><span class="ok">OK</span> Weekly: smock + indoor shoes home Fri, back Mon (washed)</div>
+    </div>
+  </div>
+
+  <div id="tab-ref" class="tab-panel">
+    <div class="grid2">
+      <div class="card">
+        <div class="section-title" style="margin-top:0">Key contacts</div>
+        <div class="ref-row"><span class="ref-key">School phone</span><span class="ref-val">03-3750-3530</span></div>
+        <div class="ref-row"><span class="ref-key">Call teachers</span><span class="ref-val">3:00-4:00 PM only</span></div>
+        <div class="ref-row"><span class="ref-key">School doctor</span><span class="ref-val">Horikoshi Clinic 03-3735-3731</span></div>
+      </div>
+      <div class="card">
+        <div class="section-title" style="margin-top:0">Huy's details</div>
+        <div class="ref-row"><span class="ref-key">Class</span><span class="ref-val">Coinu class (year-1)</span></div>
+        <div class="ref-row"><span class="ref-key">Teachers</span><span class="ref-val">Kobayashi / Narioka Sana</span></div>
+        <div class="ref-row"><span class="ref-key">Enrollment no.</span><span class="ref-val">No. 45</span></div>
+        <div class="ref-row"><span class="ref-key">Bus route</span><span class="ref-val">Kirin Course Stop #7b</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-top:0">School hours</div>
+      <div class="ref-row"><span class="ref-key">Mon/Tue/Thu/Fri</span><span class="ref-val">9:00 AM - 2:00 PM</span></div>
+      <div class="ref-row"><span class="ref-key">Wednesday</span><span class="ref-val">9:00 AM - 11:30 AM</span></div>
+      <div class="ref-row"><span class="ref-key">Gate opens</span><span class="ref-val">9:00-9:20 AM</span></div>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-top:0">Bus times -- Kirin Course Stop #7b</div>
+      <div class="ref-row"><span class="ref-key">Morning pickup</span><span class="ref-val">8:44 AM </span></div>
+      <div class="ref-row"><span class="ref-key">Wed afternoon drop-off</span><span class="ref-val">12:24 PM</span></div>
+      <div class="ref-row"><span class="ref-key">Mon/Tue/Thu/Fri drop-off</span><span class="ref-val">2:54 PM</span></div>
+      <div class="ref-row"><span class="ref-key">Cancel morning bus</span><span class="ref-val">Via app, 10 min before departure</span></div>
+      <div class="ref-row"><span class="ref-key">Cancel afternoon bus</span><span class="ref-val">Via app, by 1:00 PM</span></div>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-top:0">Weekly lunch schedule</div>
+      <div class="ref-row"><span class="ref-key">Monday</span><span class="ref-val">School lunch + milk</span></div>
+      <div class="ref-row"><span class="ref-key">Tuesday</span><span class="ref-val">School lunch + milk</span></div>
+      <div class="ref-row"><span class="ref-key">Wednesday</span><span class="ref-val">Milk only (bring mat + cup)</span></div>
+      <div class="ref-row"><span class="ref-key">Thursday</span><span class="ref-val">Homemade bento + milk</span></div>
+      <div class="ref-row"><span class="ref-key">Friday</span><span class="ref-val">Homemade bento + milk</span></div>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-top:0">Illness / return-to-school rules</div>
+      <div class="ref-row"><span class="ref-key">General fever</span><span class="ref-val">Symptom-free 24h</span></div>
+      <div class="ref-row"><span class="ref-key">High fever</span><span class="ref-val">48h after fever breaks</span></div>
+      <div class="ref-row"><span class="ref-key">Influenza</span><span class="ref-val">Day 0 = onset; return after Day 5 AND 3 days fever-free</span></div>
+      <div class="ref-row"><span class="ref-key">COVID-19</span><span class="ref-val">Day 0 = onset; return after Day 5 AND 1 day after symptoms improve</span></div>
+      <div class="ref-row"><span class="ref-key">Vomiting/diarrhea</span><span class="ref-val">Normal stools, no nausea, eating normally</span></div>
+      <div class="ref-row"><span class="ref-key">Before returning</span><span class="ref-val">Call school the day before: 03-3750-3530</span></div>
+    </div>
+    <div class="card">
+      <div class="section-title" style="margin-top:0">Emergency evacuation sites</div>
+      <div class="ref-row"><span class="ref-key">1st site</span><span class="ref-val">School playground</span></div>
+      <div class="ref-row"><span class="ref-key">2nd site</span><span class="ref-val">Higashi-Chofu 3rd Elementary gym</span></div>
+      <div class="ref-row"><span class="ref-key">3rd site</span><span class="ref-val">Tama River bank near Gas Bridge</span></div>
+      <div class="ref-row"><span class="ref-key">Pickup rule</span><span class="ref-val">Only people listed on pickup card can collect Huy</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const items = [
+  {text:"Switch backpack spare socks to white short socks",meta:"Do today -- Jun 1",done:false},
+  {text:"Respond to pool participation survey on renraku app",meta:"Required before Jun 25",mone:false},
+  {text:"Prepare pool kit: swimsuit, bath towel, pool bag -- all labelled",meta:"Ready by Jun 25",mone:false},
+  {text:"Apply for July extra lunch via renraku app",meta:"DEADLINE: Jun 15 at 5:00 PM",done:false},
+  {text:"Add ice pack (labelled) to all homemade bentos",meta:"From Jun 1 -- Thu/Fri required",done:false},
+  {text:"Add bento box (self-open type) to daily bag",meta:"From June",done:false},
+  {text:"Put 2 labelled spare masks in bag back-pocket",meta:"Required -- school charges 13 yen per mask if they supply",done:false},
+  {text:"Put large plastic bag in backpack (for wet T-shirt after play)",meta:"From Jun 1",done:false},
+  {text:"Book summer extended care if needed (Type 2)",meta:"Window: Jun 29 noon - Jul 2 noon",done:false},
+  {text:"Mark parent-teacher conference in your calendar",meta:"Jul 10 (Fri) 4:20 PM -- confirmed",done:false},
+  {text:"Confirm all Huy registrations with teacher (pool, bus, lunch, care)",meta:"He joined in June -- verify setup",done:false},
+  {text:"Submit pool card to teacher on every pool day from Jun 25",meta:"Ongoing -- forgotten card = no swimming",done:false},
+];
+function saveState(){localStorage.setItem('huy_checklist',JSON.stringify(items.map(i=>i.done)))}
+function loadState(){const s=localStorage.getItem('huy_checklist');if(s){const a=JSON.parse(s);a.forEach((v,i)=>{if(items[i])items[i].done=v})}}
+function renderList(){const c=document.getElementById('checklist-container');c.innerHTML= �const d=items.filter(i=>i.done).length;document.getElementById('progress-fill').style.width=(d/items.length*100)+'%';document.getElementById('progress-label').textContent=d+' / '+items.length+' done';items.forEach((item,i)=>{const div=document.createElement('div');div.className='checklist-item';div.onclick=()=>{items[i].done=!items[i].done;saveState();renderList()};div.innerHTML=f<div class="check-box ${item.done?'done':''}">${item.done?'✓:''}</div><div style="flex:1"><div class="check-label ${item.done?'done':''}">${item.text}</div><div class="check-meta">${item.meta}</div></div>`;c.appendChild(div)})}
+function resetChecklist(){if(confirm('Reset all checklist items?')){items.forEach(i=>i.done=false);saveState();renderList()}}
+function showTab(id,el){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');el.classList.add('active')}
+loadState();
+renderList();
+</script>
+</body>
+</html>
