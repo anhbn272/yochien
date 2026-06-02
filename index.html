@@ -171,8 +171,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
     <div class="week-card" style="margin-bottom:10px">
       <div class="week-card-title">⚠️ 今週・直近の締切とアクション</div>
 
-      <div class="deadline-item" data-item-id="w-0" onclick="toggleWeekItem('w-0')">
-        <div class="dl-checkbox" id="chk-w-0"></div>
+      <div class="deadline-item" data-item-id="lunch-july" onclick="toggleWeekItem('lunch-july')">
+        <div class="dl-checkbox" id="chk-lunch-july"></div>
         <div class="dl-date dl-urgent">6/15 締切</div>
         <div>
           <div class="dl-text">7月分追加給食の申込（れんらくアプリ）</div>
@@ -180,8 +180,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         </div>
       </div>
 
-      <div class="deadline-item" data-item-id="w-1" onclick="toggleWeekItem('w-1')">
-        <div class="dl-checkbox" id="chk-w-1"></div>
+      <div class="deadline-item" data-item-id="pool-survey" onclick="toggleWeekItem('pool-survey')">
+        <div class="dl-checkbox" id="chk-pool-survey"></div>
         <div class="dl-date dl-soon">要回答</div>
         <div>
           <div class="dl-text">プール参加アンケート（れんらくアプリ）</div>
@@ -189,8 +189,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         </div>
       </div>
 
-      <div class="deadline-item" data-item-id="w-2" onclick="toggleWeekItem('w-2')">
-        <div class="dl-checkbox" id="chk-w-2"></div>
+      <div class="deadline-item" data-item-id="uniform-check" onclick="toggleWeekItem('uniform-check')">
+        <div class="dl-checkbox" id="chk-uniform-check"></div>
         <div class="dl-date dl-soon">今週中</div>
         <div>
           <div class="dl-text">夏制服への切り替え確認</div>
@@ -198,8 +198,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         </div>
       </div>
 
-      <div class="deadline-item" data-item-id="w-3" onclick="toggleWeekItem('w-3')">
-        <div class="dl-checkbox" id="chk-w-3"></div>
+      <div class="deadline-item" data-item-id="registration-check" onclick="toggleWeekItem('registration-check')">
+        <div class="dl-checkbox" id="chk-registration-check"></div>
         <div class="dl-date dl-soon">今週中</div>
         <div>
           <div class="dl-text">登録確認 — バス・給食・預かり保育</div>
@@ -618,7 +618,6 @@ renderDay('mon');
 const GH_REPO='anhbn272/yochien';
 const GH_FILE='checklist-state.json';
 const GH_TOKEN=['github_pat_11AVCEFLQ0owL6','bvSyafRM_3Tqaew6SoM1sXDh5XFUg2LaGKcClKX4m3mfTRs2A0ChM32LW5JV50WXpuGi'].join('');
-const CURRENT_WEEK='2026-W23';
 
 let weekState={};
 let fileSHA=null;
@@ -650,7 +649,7 @@ async function loadWeekState(){
     const data=await res.json();
     fileSHA=data.sha;
     const content=JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
-    weekState=(content.week===CURRENT_WEEK?content.items:{})||{};
+    weekState=content.items||{};
     renderWeekChecks();
     setSyncStatus('ok');
   }catch(e){setSyncStatus('err');}
@@ -659,7 +658,7 @@ async function loadWeekState(){
 async function saveWeekState(){
   setSyncStatus('saving');
   try{
-    const content=JSON.stringify({week:CURRENT_WEEK,items:weekState},null,2);
+    const content=JSON.stringify({items:weekState},null,2);
     const encoded=btoa(unescape(encodeURIComponent(content)));
     const res=await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,{
       method:'PUT',

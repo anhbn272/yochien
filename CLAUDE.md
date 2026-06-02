@@ -39,9 +39,15 @@ Flag anything unusual immediately (e.g. schedule changes, items specific to Huy 
 
 ## Weekly refresh
 The 今週 tab should reflect the current week. When asked to refresh for a new week:
-- Update the week date range
-- Pull in any deadlines or events from the calendar that fall within 7–14 days
-- Update 来週の予告 (next week preview) accordingly
+1. Read `checklist-state.json` from the repo first
+2. For each item in `items`: keep it if its deadline is still in the future; remove it if the deadline has passed
+3. Update the week date range in `index.html`
+4. Add new deadline items for the coming week (give each a meaningful semantic ID, e.g. `pool-survey`, `lunch-july`)
+5. Pull in any deadlines or events from the calendar that fall within 7–14 days
+6. Update 来週の予告 (next week preview) accordingly
+7. Write the cleaned-up state back to `checklist-state.json` (only remove expired items — preserve checked state of future items)
+
+**Checklist state design**: state is keyed by item ID with no week field. Items persist until explicitly removed during a weekly refresh. Never reset state based on week change alone.
 
 ## Communication style
 - Be direct — no unnecessary preamble
