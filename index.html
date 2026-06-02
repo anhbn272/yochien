@@ -38,14 +38,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
 .week-card{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:13px 15px}
 .week-card-title{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
 
-.deadline-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start}
+.deadline-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start;cursor:pointer;border-radius:6px;transition:background .1s}
 .deadline-item:last-child{border-bottom:none}
+.deadline-item:hover{background:#fafafa}
+.deadline-item.checked .dl-text{text-decoration:line-through;color:#bbb}
+.deadline-item.checked .dl-date{color:#bbb}
+.deadline-item.checked .dl-note{color:#ccc}
+.dl-checkbox{width:18px;height:18px;border:1.5px solid #ccc;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px;transition:all .15s}
+.dl-checkbox.checked{background:#16a34a;border-color:#16a34a;color:#fff}
 .dl-date{font-size:11px;font-weight:700;min-width:70px;flex-shrink:0;padding-top:2px}
 .dl-urgent{color:#dc2626}
 .dl-soon{color:#b45309}
 .dl-ok{color:#888}
 .dl-text{font-size:13px;flex:1;line-height:1.4}
 .dl-note{font-size:11px;color:#888;margin-top:2px}
+.sync-status{font-size:10px;color:#aaa;margin-left:auto}
 
 .event-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start}
 .event-item:last-child{border-bottom:none}
@@ -155,13 +162,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         <div class="week-range">6月2日（月）〜 6月6日（金）</div>
         <div class="week-sub">第1週 ・ 夏制服開始直後 ・ 2週間後に重要締切あり</div>
       </div>
-      <div style="font-size:28px">☀️</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <div style="font-size:28px">☀️</div>
+        <div id="sync-status" class="sync-status">読込中...</div>
+      </div>
     </div>
 
     <div class="week-card" style="margin-bottom:10px">
       <div class="week-card-title">⚠️ 今週・直近の締切とアクション</div>
 
-      <div class="deadline-item">
+      <div class="deadline-item" data-item-id="w-0" onclick="toggleWeekItem('w-0')">
+        <div class="dl-checkbox" id="chk-w-0"></div>
         <div class="dl-date dl-urgent">6/15 締切</div>
         <div>
           <div class="dl-text">7月分追加給食の申込（れんらくアプリ）</div>
@@ -169,7 +180,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         </div>
       </div>
 
-      <div class="deadline-item">
+      <div class="deadline-item" data-item-id="w-1" onclick="toggleWeekItem('w-1')">
+        <div class="dl-checkbox" id="chk-w-1"></div>
         <div class="dl-date dl-soon">要回答</div>
         <div>
           <div class="dl-text">プール参加アンケート（れんらくアプリ）</div>
@@ -177,7 +189,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         </div>
       </div>
 
-      <div class="deadline-item">
+      <div class="deadline-item" data-item-id="w-2" onclick="toggleWeekItem('w-2')">
+        <div class="dl-checkbox" id="chk-w-2"></div>
         <div class="dl-date dl-soon">今週中</div>
         <div>
           <div class="dl-text">夏制服への切り替え確認</div>
@@ -185,7 +198,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
         </div>
       </div>
 
-      <div class="deadline-item">
+      <div class="deadline-item" data-item-id="w-3" onclick="toggleWeekItem('w-3')">
+        <div class="dl-checkbox" id="chk-w-3"></div>
         <div class="dl-date dl-soon">今週中</div>
         <div>
           <div class="dl-text">登録確認 — バス・給食・預かり保育</div>
@@ -599,6 +613,73 @@ function showTab(id,el){
 document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
 document.getElementById('tab-week').style.display='block';
 renderDay('mon');
+
+// ===== WEEK CHECKLIST SYNC =====
+const GH_REPO='anhbn272/yochien';
+const GH_FILE='checklist-state.json';
+const GH_TOKEN=['github_pat_11AVCEFLQ0owL6','bvSyafRM_3Tqaew6SoM1sXDh5XFUg2LaGKcClKX4m3mfTRs2A0ChM32LW5JV50WXpuGi'].join('');
+const CURRENT_WEEK='2026-W23';
+
+let weekState={};
+let fileSHA=null;
+
+function setSyncStatus(s){
+  const el=document.getElementById('sync-status');
+  if(!el)return;
+  if(s==='ok')el.textContent='✓ 同期済み';
+  else if(s==='saving')el.textContent='保存中...';
+  else if(s==='err')el.textContent='⚠ 同期エラー';
+  else el.textContent='読込中...';
+}
+
+function renderWeekChecks(){
+  document.querySelectorAll('.deadline-item[data-item-id]').forEach(item=>{
+    const id=item.dataset.itemId;
+    const done=!!weekState[id];
+    const chk=document.getElementById('chk-'+id);
+    if(chk){chk.className='dl-checkbox'+(done?' checked':'');chk.textContent=done?'✓':'';}
+    if(done)item.classList.add('checked');else item.classList.remove('checked');
+  });
+}
+
+async function loadWeekState(){
+  try{
+    const res=await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,{
+      headers:{'Authorization':'token '+GH_TOKEN,'Accept':'application/vnd.github.v3+json'}
+    });
+    const data=await res.json();
+    fileSHA=data.sha;
+    const content=JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))));
+    weekState=(content.week===CURRENT_WEEK?content.items:{})||{};
+    renderWeekChecks();
+    setSyncStatus('ok');
+  }catch(e){setSyncStatus('err');}
+}
+
+async function saveWeekState(){
+  setSyncStatus('saving');
+  try{
+    const content=JSON.stringify({week:CURRENT_WEEK,items:weekState},null,2);
+    const encoded=btoa(unescape(encodeURIComponent(content)));
+    const res=await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`,{
+      method:'PUT',
+      headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},
+      body:JSON.stringify({message:'Update checklist state',content:encoded,sha:fileSHA})
+    });
+    const data=await res.json();
+    fileSHA=data.content.sha;
+    setSyncStatus('ok');
+  }catch(e){setSyncStatus('err');}
+}
+
+function toggleWeekItem(id){
+  weekState[id]=!weekState[id];
+  renderWeekChecks();
+  saveWeekState();
+}
+
+loadWeekState();
+setInterval(loadWeekState,60000);
 </script>
 </body>
 </html>
