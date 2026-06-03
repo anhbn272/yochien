@@ -572,10 +572,12 @@ function toggle(day,gi,ii){setS(day,gi,ii,!getS(day,gi,ii));renderDay(day);}
 
 function updateProgress(){
   let done=0,total=0;
-  DAYS_ORDER.forEach(day=>allItemsForDay(day).forEach(({gi,ii})=>{total++;if(getS(day,gi,ii))done++;}));
+  allItemsForDay(currentDay).forEach(({gi,ii})=>{total++;if(getS(currentDay,gi,ii))done++;});
   const pct=total?Math.round(done/total*100):0;
   document.getElementById('pbar-fill').style.width=pct+'%';
-  document.getElementById('pbar-lbl').textContent=`${done} / ${total} 完了（全曜日）`;
+  const lbl=document.getElementById('pbar-lbl');
+  if(done===total&&total>0)lbl.textContent='✓ 完了';
+  else lbl.textContent=`${done} / ${total}`;
 }
 
 function showDay(day,el){
