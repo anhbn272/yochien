@@ -620,10 +620,8 @@ let fileSHA=null;
 function setSyncStatus(s){
   const el=document.getElementById('sync-status');
   if(!el)return;
-  if(s==='ok')el.textContent='✓ 同期済み';
-  else if(s==='saving')el.textContent='保存中...';
-  else if(s==='err')el.textContent='⚠ 同期エラー';
-  else el.textContent='読込中...';
+  if(s==='err')el.textContent='⚠ 同期エラー';
+  else el.textContent='';
 }
 
 function renderWeekChecks(){
