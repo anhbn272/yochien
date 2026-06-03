@@ -2,7 +2,7 @@
   "items": {
     "lunch-july": true,
     "pool-survey": true,
-    "uniform-check": false,
+    "uniform-check": true,
     "registration-check": true
   }
 }
