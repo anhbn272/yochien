@@ -1,10 +1,8 @@
-# A Non-Developer Built a Self-Updating School Dashboard With AI — Here's the Exact Process
+# How I vibe coded with AI and built a school dashboard
 
-My son Huy started kindergarten in Japan this June. By the end of the first week I had 23 pages of PDFs I hadn't fully read, a school app I'd set up wrong, a bus schedule I'd already gotten wrong once, and a wife who needed all the same information I was struggling to keep straight.
+My son started kindergarten in Japan this June. Once the application is done and we started preparing for his new school life, I and my wife immediately realized the sheer amount of admin work. [add some fyi about how yochien is in japan, especially how it differs with hoikuen] I had 40 pages of school rules and procedures - paper only, of course: what to bring to school, what to where depends on the day, bus schedule, regular activities through out the year, etc. My wife and I were desperate: how do we handle all of these information while working full time and caring for 2 kids?
 
-I'm not a developer. I don't write code. I work in a completely unrelated field.
-
-I still built a dashboard. It updates itself when new school documents arrive. My wife and I can both check items off from our phones and see each other's changes in real time. It cost nothing to deploy and runs on free infrastructure.
+I'm not a developer. I don't write code. I work in a completely unrelated field. I still built a dashboard. It updates itself when new school documents arrive. My wife and I can both check items off from our phones and see each other's changes in real time. It cost nothing to deploy and runs on free infrastructure.
 
 This post is for anyone who has a workflow that's mostly manual and involves documents — and who has assumed "I'd need to hire someone to build this."
 
