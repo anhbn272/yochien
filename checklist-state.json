@@ -1,6 +1,7 @@
 {
   "items": {
     "pool-survey": true,
-    "parents-survey": true
+    "parents-survey": true,
+    "pool-prep": true
   }
 }
