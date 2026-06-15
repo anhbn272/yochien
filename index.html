@@ -170,6 +170,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
     <div class="week-card" style="margin-bottom:10px">
       <div class="week-card-title">⚠️ 今週・直近の締切とアクション</div>
 
+      <div class="deadline-item" data-item-id="parents-survey" onclick="toggleWeekItem('parents-survey')">
+        <div class="dl-checkbox" id="chk-parents-survey"></div>
+        <div class="dl-date dl-urgent">6/17 17:00</div>
+        <div>
+          <div class="dl-text">参観日 出欠席アンケート（れんらくアプリ）</div>
+          <div class="dl-note">全員必須。出欠席と参加保護者を回答。忘れると入場不可になる場合あり。</div>
+        </div>
+      </div>
+
       <div class="deadline-item" data-item-id="pool-survey" onclick="toggleWeekItem('pool-survey')">
         <div class="dl-checkbox" id="chk-pool-survey"></div>
         <div class="dl-date dl-soon">6/25 まで</div>
@@ -190,10 +199,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
 
       <div class="deadline-item" data-item-id="parents-day" onclick="toggleWeekItem('parents-day')">
         <div class="dl-checkbox" id="chk-parents-day"></div>
-        <div class="dl-date dl-soon">6/21</div>
+        <div class="dl-date dl-soon">6/21（日）</div>
         <div>
-          <div class="dl-text">父（母）親参観日 — こいぬ組の時間を確認</div>
-          <div class="dl-note">6/21（日）開催。こいぬ組の参観時間はTBC。れんらくアプリで確認を。</div>
+          <div class="dl-text">父（母）親参観日 — こいぬ組 8:45〜9:30</div>
+          <div class="dl-note">開門 8:30。持物：入場券・園児名札（保護者左胸）・室内履き＋外靴袋・水筒。撮影禁止。保護者1名のみ。フィーは正装（エプロン着用）。アサガオの鉢を持ち帰り。</div>
         </div>
       </div>
 
@@ -219,10 +228,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
 
       <div class="week-card">
         <div class="week-card-title">🎒 今週の準備</div>
+        <div class="prepare-item"><div class="prepare-dot"></div><div>⚠ 水曜17時までに参観日アンケート回答（れんらくアプリ）</div></div>
         <div class="prepare-item"><div class="prepare-dot"></div><div>水曜：エプロン＋名札＋園章を確認（正装日）</div></div>
         <div class="prepare-item"><div class="prepare-dot"></div><div>金曜：スモック・上履きを持ち帰り洗濯</div></div>
         <div class="prepare-item"><div class="prepare-dot"></div><div>プール用品の準備・記名を今週中に完了（6/25〜）</div></div>
-        <div class="prepare-item"><div class="prepare-dot"></div><div>参観日（6/21 日曜）こいぬ組の時間をアプリで確認</div></div>
+        <div class="prepare-item"><div class="prepare-dot"></div><div>参観日（6/21）：入場券・名札・室内履き・外靴袋を準備</div></div>
         <div class="prepare-item"><div class="prepare-dot"></div><div>6/22（月）は創立記念日 — 休園</div></div>
       </div>
     </div>
@@ -269,7 +279,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
       <div class="ev"><span class="ev-d">6月4日（木）</span><span class="ev-n">卒園アルバム集合写真 — 正装必須（ポロ不可）</span><span class="ev-tag" style="background:#eff6ff;color:#1d4ed8">行事</span></div>
       <div class="ev"><span class="ev-d">6月8日（月）</span><span class="ev-n">避難訓練</span><span class="ev-tag" style="background:#eff6ff;color:#1d4ed8">行事</span></div>
       <div class="ev"><span class="ev-d">6月15日（月）</span><span class="ev-n">⚠ 締切：7月追加給食申込（17:00）</span><span class="ev-tag" style="background:#fff0f0;color:#dc2626">締切</span></div>
-      <div class="ev"><span class="ev-d">6月21日（日）</span><span class="ev-n">父（母）親参観日 — こいぬ組の時間はTBC</span><span class="ev-tag" style="background:#eff6ff;color:#1d4ed8">📍参加</span></div>
+      <div class="ev"><span class="ev-d">6月21日（日）</span><span class="ev-n">父（母）親参観日 — こいぬ組 開門8:30 / 参観8:45〜9:30 / 正装・入場券必携・撮影禁止</span><span class="ev-tag" style="background:#eff6ff;color:#1d4ed8">📍参加</span></div>
       <div class="ev"><span class="ev-d">6月22日（月）</span><span class="ev-n">創立記念日 — 休園</span><span class="ev-tag" style="background:#f5f5f5;color:#555">休園</span></div>
       <div class="ev"><span class="ev-d">6月24日（水）</span><span class="ev-n">プール開き（授業なし）</span><span class="ev-tag" style="background:#eff6ff;color:#1d4ed8">行事</span></div>
       <div class="ev"><span class="ev-d">6月25日（木）</span><span class="ev-n">初プール — 水着・バスタオル・プールカード必携</span><span class="ev-tag" style="background:#f0fdf4;color:#16a34a">プール</span></div>
