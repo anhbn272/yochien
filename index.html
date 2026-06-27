@@ -136,7 +136,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
     <h1>グエン・ミン・フィー — 幼稚園ダッシュボード</h1>
     <div class="sub">こいぬ組 ・ きりんコース #7b ・ 鵜ノ木幼稚園</div>
   </div>
-  <div class="updated">更新: 2026年6月22日</div>
+  <div class="updated">更新: 2026年6月27日</div>
 </div>
 
 <div class="wrap">
@@ -144,8 +144,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
   <div class="flag">
     <div class="icon">🚩</div>
     <div class="body">
-      <strong>6/24（水）</strong> プール開き（正装日・短縮保育 11:30終）<br>
-      <strong>6/25（木）</strong> 初プール — プールカード毎回必携・忘れると入水不可<br>
+      <strong>⚠ 7/2（木）正午締切</strong> 夏期預かり保育申込（2号）— 6/29（月）正午から受付。れんらくアプリより申込。<br>
+      <strong>7/10（金）16:20</strong> フィー個人面談（こいぬ組）— 7/8（水）〜個人面談週間、1号預かり休止。<br>
       <strong>追加給食（水・木・金）を毎月申込予定</strong> — お弁当は基本不要。毎月締切を忘れずに。
     </div>
   </div>
@@ -163,8 +163,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
 
     <div class="week-header">
       <div>
-        <div class="week-range">6月22日（月）〜 6月26日（金）</div>
-        <div class="week-sub">第4週 ・ 月曜休園 ・ 水曜プール開き ・ 木曜初プール</div>
+        <div class="week-range">6月29日（月）〜 7月3日（金）</div>
+        <div class="week-sub">第5週 ・ 水曜正装日 ・ 木曜プールあり ・ 7/2（木）夏期預かり申込締切</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <div id="sync-status" class="sync-status">読込中...</div>
@@ -174,30 +174,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
     <div class="week-card" style="margin-bottom:10px">
       <div class="week-card-title">⚠️ 今週・直近の締切とアクション</div>
 
-      <div class="deadline-item" data-item-id="pool-survey" onclick="toggleWeekItem('pool-survey')">
-        <div class="dl-checkbox" id="chk-pool-survey"></div>
-        <div class="dl-date dl-urgent">6/25 まで</div>
-        <div>
-          <div class="dl-text">プール参加アンケート（れんらくアプリ）</div>
-          <div class="dl-note">今週木曜が初プール。回答済みか確認を。</div>
-        </div>
-      </div>
-
-      <div class="deadline-item" data-item-id="pool-prep" onclick="toggleWeekItem('pool-prep')">
-        <div class="dl-checkbox" id="chk-pool-prep"></div>
-        <div class="dl-date dl-urgent">6/25 まで</div>
-        <div>
-          <div class="dl-text">プール用品の準備・記名</div>
-          <div class="dl-note">水着（自分で脱ぎ着できるタイプ）・バスタオル・プールバッグ・プールカード。全て記名必須。木曜までに。</div>
-        </div>
-      </div>
-
       <div class="deadline-item" data-item-id="summer-care-signup" onclick="toggleWeekItem('summer-care-signup')">
         <div class="dl-checkbox" id="chk-summer-care-signup"></div>
-        <div class="dl-date dl-soon">7/2 締切</div>
+        <div class="dl-date dl-urgent">7/2 正午まで</div>
         <div>
           <div class="dl-text">夏期預かり保育申込（2号）</div>
-          <div class="dl-note">6/29（月）申込開始 → 7/2（木）正午締切。れんらくアプリで申込。</div>
+          <div class="dl-note">6/29（月）正午から受付開始。7/2（木）正午締切。れんらくアプリより申込。期日内キャンセル料無料。</div>
+        </div>
+      </div>
+
+      <div class="deadline-item" data-item-id="personal-interview" onclick="toggleWeekItem('personal-interview')">
+        <div class="dl-checkbox" id="chk-personal-interview"></div>
+        <div class="dl-date dl-soon">7/10 16:20</div>
+        <div>
+          <div class="dl-text">フィー個人面談（こいぬ組）</div>
+          <div class="dl-note">7/10（金）16:20。個人面談週間は7/8（水）〜。1号預かり保育は休止。</div>
+        </div>
+      </div>
+
+      <div class="deadline-item" data-item-id="lunch-aug" onclick="toggleWeekItem('lunch-aug')">
+        <div class="dl-checkbox" id="chk-lunch-aug"></div>
+        <div class="dl-date dl-ok">7/15 締切</div>
+        <div>
+          <div class="dl-text">8月追加給食申込（2号・水木金）</div>
+          <div class="dl-note">7/15（水）17:00締切。れんらくアプリで申込。8月は給食なし月（月火）に注意。</div>
         </div>
       </div>
     </div>
@@ -206,34 +206,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
       <div class="week-card">
         <div class="week-card-title">📅 今週の行事</div>
         <div class="event-item">
-          <div class="ev-day">月曜日</div>
-          <div class="ev-text">創立記念日 — 休園</div>
+          <div class="ev-day">水曜日（7/1）</div>
+          <div class="ev-text">正装日 ＋ 短縮保育（11:30終）＋ プールあり</div>
         </div>
         <div class="event-item">
-          <div class="ev-day">水曜日</div>
-          <div class="ev-text">プール開き ＋ 正装日 ＋ 短縮保育（11:30終）</div>
-        </div>
-        <div class="event-item">
-          <div class="ev-day">木曜日</div>
-          <div class="ev-text">初プール — プールカード必携</div>
+          <div class="ev-day">木曜日（7/2）</div>
+          <div class="ev-text">⚠ 夏期預かり申込締切 正午 ＋ プールあり</div>
         </div>
       </div>
 
       <div class="week-card">
         <div class="week-card-title">🎒 今週の準備</div>
-        <div class="prepare-item"><div class="prepare-dot"></div><div>水曜：エプロン＋名札＋園章（正装日・プール開き）</div></div>
-        <div class="prepare-item"><div class="prepare-dot"></div><div>木曜：プールカード（先生に手渡す）・水着・バスタオル・プールバッグ（全て記名）</div></div>
-        <div class="prepare-item"><div class="prepare-dot"></div><div>金曜：スモック・上履きを持ち帰り洗濯</div></div>
-        <div class="prepare-item"><div class="prepare-dot"></div><div>月曜は休園 — 火曜から登園再開</div></div>
+        <div class="prepare-item"><div class="prepare-dot"></div><div>水曜（7/1）：エプロン＋名札＋園章（正装日）＋ プールカード・水着・バスタオル</div></div>
+        <div class="prepare-item"><div class="prepare-dot"></div><div>木曜（7/2）：プールカード（先生に手渡す）・水着・バスタオル・プールバッグ（全て記名）＋ 夏期預かり申込を正午までに</div></div>
+        <div class="prepare-item"><div class="prepare-dot"></div><div>金曜（7/3）：スモック・上履きを持ち帰り洗濯</div></div>
+        <div class="prepare-item"><div class="prepare-dot"></div><div>月曜（6/29）：スモック・上履きを返す（洗濯済み）</div></div>
       </div>
     </div>
 
     <div class="next-week">
       <div class="next-week-title">👀 来週以降の予告</div>
-      <div class="next-item"><span class="next-dot">▸</span><span><strong>6/29（月）</strong> 夏期預かり保育申込開始（れんらくアプリ）</span></div>
-      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/2（木）</strong> 夏期預かり保育申込締切 正午</span></div>
-      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/8〜</strong> 個人面談週間 — 1号預かり保育休止</span></div>
-      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/10（金）</strong> フィー個人面談 16:20</span></div>
+      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/6（月）正午〜7/9（木）正午</strong> 夏期預かり1号申込（1号のみ対象）</span></div>
+      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/8（水）〜</strong> 個人面談週間 — 1号預かり保育休止</span></div>
+      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/10（金）16:20</strong> フィー個人面談（こいぬ組）</span></div>
+      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/15（水）</strong> 8月追加給食申込締切（17:00）</span></div>
+      <div class="next-item"><span class="next-dot">▸</span><span><strong>7/17（金）</strong> 1学期終業日（午前のみ）</span></div>
     </div>
 
   </div>
@@ -248,12 +245,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku
       <div class="pbar"><div class="pbar-fill" id="pbar-fill" style="width:0%"></div></div>
     </div>
     <div class="card" style="margin-bottom:12px">
-      <div class="week-card-title" style="margin-bottom:8px">🍱 今週の給食メニュー（6/22〜6/26）</div>
-      <div class="ref-row"><span class="ref-k">月</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400;color:#aaa">休園</span></div>
-      <div class="ref-row"><span class="ref-k">火</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400">せとふうみふりかけごはん ・ えだまめとベーコンのソテー ・ いそべささみフライ</span></div>
-      <div class="ref-row"><span class="ref-k">水</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400">ごましおかけごはん ・ キャベツソテー（プール開き）</span></div>
-      <div class="ref-row"><span class="ref-k">木</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400">なめし ・ とりにくのトマトに（初プール）</span></div>
-      <div class="ref-row"><span class="ref-k">金</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400">たらこふりかけごはん ・ ちんげんさいソテー ・ さわらのたったあげ</span></div>
+      <div class="week-card-title" style="margin-bottom:8px">🍱 今週の給食メニュー（6/29〜7/3）</div>
+      <div class="ref-row"><span class="ref-k">月（6/29）</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400;color:#aaa">7月メニュー準備中</span></div>
+      <div class="ref-row"><span class="ref-k">火（6/30）</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400;color:#aaa">7月メニュー準備中</span></div>
+      <div class="ref-row"><span class="ref-k">水（7/1）</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400;color:#aaa">追加給食 — メニュー準備中</span></div>
+      <div class="ref-row"><span class="ref-k">木（7/2）</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400;color:#aaa">追加給食 — メニュー準備中</span></div>
+      <div class="ref-row"><span class="ref-k">金（7/3）</span><span class="ref-v" style="font-size:12px;text-align:left;font-weight:400;color:#aaa">追加給食 — メニュー準備中</span></div>
       <div style="font-size:10px;color:#aaa;margin-top:8px;padding-top:6px;border-top:1px solid #f0f0f0">容器は翌日回収 ・ スプーン・フォークは記名を</div>
     </div>
     <div class="day-tabs">
